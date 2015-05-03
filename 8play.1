@@ -1,0 +1,212 @@
+.\"Copyright (c) 2015 Johannes Postma <jgmpostma@gmail.com>
+.\"
+.\"Permission to use, copy, modify, and distribute this software for any
+.\"purpose with or without fee is hereby granted, provided that the above
+.\"copyright notice and this permission notice appear in all copies.
+.\"
+.\"THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\"WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\"MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\"ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\"WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\"ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\"OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.TH 8PLAY 1 "APRIL 2015" Linux "User Manuals"
+.SH NAME
+8play \- an unofficial player for 8tracks.com
+.SH SYNOPSIS
+.B 8play [-P [-c]]
+.I URL
+.br
+.B 8play -S
+.I SmartID
+.br
+.B 8play -Q
+.I URL
+.SH DESCRIPTION
+.B 8play
+is an unofficial player for 8tracks.com.  It can play, search, and display
+8tracks.com mixes.
+.SH OPTIONS
+.TP
+.B -P
+Play a mix.
+.TP
+.B -c
+Continuous playback with similar mixes.
+.TP
+.B -S
+Search by
+.I Smart ID
+and print the mixes that were found with a short description.
+See
+.B SMARTID
+for more information about Smart IDs.
+.TP
+.B -Q
+Display extended mix info.
+.SH CONTROLS
+The following keyboard controls can be used during playback:
+.TP
+.B >
+Skip mix.
+.TP
+.B ENTER
+Skip track.
+.TP
+.B p / SPACE
+Pause (pressing again unpauses).
+.TP
+.B q / CTRL-c
+Stop playing and quit.
+.SH SMARTID
+8tracks.com uses Smart IDs to identify mixes.  A Smart ID can identify a very
+specific set of mixes, but it can also be very global and broad.  8tracks.com
+offers a large range of mixes.  With Smart IDs you can search for those mixes
+that apply to your interests.
+
+The format for Smart IDs is as follows:
+.RS
+type[:id|:slug][:sort]
+.RE
+All the parts will be explained below.
+.SS TYPE
+The following types are available:
+.TP 9
+.B all
+The unfiltered set of all mixes.
+.TP 
+.B tags
+Mixes filtered by a tag or multiple tags.  This is the most common use.
+.TP
+.B artist
+Mixes filtered by artist match within the tracklist.
+.TP
+.B keyword
+Fulltext search results for a string, ordered by relevance.
+.TP
+.B dj
+The mixes published by a particular user, in reverse-chronological order.
+.TP
+.B liked
+The mixes liked by a particular user, in reverse-chronological order.
+.TP
+.B similar
+Mixes with a high similarity to a give mix, with help from The Echo Nest.
+.SS ID
+There are three
+.I types
+that take an ID as an identifier.  That is
+.I dj\fR,
+.I liked\fR,
+and,
+.I similar\fR.
+The first two take a user ID as an identifier.  The last,
+.I similar\fR,
+takes a mix ID as an identifier.
+
+To find an ID use the
+.I \-Q
+option.  It displays the mix ID of the specified mix together with the user ID
+of its creator.
+.SS SLUG
+A slug can consist out of keywords, artists, or tags depending on the
+.I type
+that is specified.
+
+A Smart ID is sent to 8tracks.com within the URL string.  This means that the
+slug has to be a UTF-8 and URL-safe string.  In order to achieve this the
+following substitution rules apply to slugs:
+.IP * 2
+Underscores \(aq_\(aq should be replaced with double underscores \(aq__\(aq.
+.IP *
+Spaces \(aq \(aq should be replaced with underscores \(aq_\(aq.
+.IP *
+Forward slashes \(aq/\(aq should be replaced by backslashes \(aq\e\(aq.
+.IP *
+Periods or dots \(aq.\(aq should be replaced by carets \(aq^\(aq.
+.SS SORT
+Some mix sets have alternate sorting methods available. These are
+.I all\fR,
+.I tags\fR, and
+.I artist\fR.
+The available sorts are
+.B hot\fR,
+.B recent\fR, and
+.B popular\fR.
+These correspond to the names Trending, Newest, and Popular on the official
+8tracks apps.  By defaults these mix sets will return the
+.I hot
+sort order, but to use another, just append it to the smart ID like so:
+.RS
+tags:pop:recent
+.RE
+or:
+.RS
+all:popular
+.RE
+.SS SMARTID EXAMPLES
+all
+.br
+all:recent
+.br
+all:popular
+.br
+tags:singer\esongwriter
+.br
+tags:hip_hop:popular
+.br
+tags:hip_hop+old-school
+.br
+tags:west_coast+g-funk:recent
+.br
+artist:Kanye_West
+.br
+artist:N^W^A
+.br
+dj:2
+.br
+similar:2206409
+
+For more information on Smart IDs see:
+.br
+http://8tracks.com/developers/smart_ids
+.SH EXAMPLES
+Play mix \(aqalbionbeqiri/sunset-lover\(aq:
+.RS
+$ 8play albionbeqiri/sunset-lover
+.RE
+or:
+.RS
+$ 8play -P albionbeqiri/sunset-lover
+.RE
+
+Full URL works as well:
+.RS
+$ 8play http://8tracks.com/albionbeqiri/sunset-lover
+.RE
+
+Play mix \(aqalbionbeqiri/sunset-love\(aq
+and continue playing similar mixes:
+.RS
+$ 8play -c albionbeqiri/sunset-lover
+.RE
+
+Search for popular mixes:
+.RS
+$ 8play -S all:popular
+.RE
+
+Search for mixes with tags \(aqhip hop\(aq and \(aqchill\(aq:
+.RS
+$ 8play -S tags:hip_hop+chill
+.RE
+
+Display mix information of \(aqalbionbeqiri/sunset-lover\(aq:
+.RS
+$ 8play -Q albionbeqiri/sunset-lover
+.RE
+
+.SH AUTHOR
+Johannes Postma <jgmpostma@gmail.com>
+

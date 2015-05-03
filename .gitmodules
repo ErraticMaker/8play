@@ -1,0 +1,3 @@
+[submodule "libplayer"]
+	path = libplayer
+	url = https://github.com/jgmp/libplayer
