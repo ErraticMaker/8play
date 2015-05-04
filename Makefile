@@ -43,6 +43,16 @@ libplayer/player.o:
 clean:
 	rm -f 8play ${OBJ} 8play.1.gz libplayer/player.o
 
+dist:
+	@echo creating tarball
+	mkdir -p 8play-${VERSION}/libplayer
+	cp *.1 *.c *.h Makefile README.md 8play-${VERSION}
+	cp libplayer/player.c libplayer/player.h libplayer/README.md \
+	    8play-${VERSION}/libplayer
+	tar -cf 8play-${VERSION}.tar 8play-${VERSION}
+	gzip 8play-${VERSION}.tar
+	rm -rf 8play-${VERSION}
+
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -f 8play ${DESTDIR}${PREFIX}/bin
