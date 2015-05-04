@@ -38,7 +38,7 @@ all: 8play
 libplayer/player.o:
 	cd libplayer; ${CC} -c ${CFLAGS} player.c
 
-.PHONY: clean install uninstall
+.PHONY: clean dist install uninstall
 
 clean:
 	rm -f 8play ${OBJ} 8play.1.gz libplayer/player.o
