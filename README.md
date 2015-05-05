@@ -8,6 +8,9 @@ dependencies for VLC and ncurses.  I wrote my own player library based on
 FFmpeg and SDL ([libplayer](https://github.com/jgmp/libplayer)), making 8play
 more lightweight.
 
+## Screenshot
+![Screenshot](screenshot.png?raw=true)
+
 ## Dependencies
 curl, ffmpeg, json-c, sdl
 
