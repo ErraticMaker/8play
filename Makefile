@@ -46,7 +46,7 @@ clean:
 dist:
 	@echo creating tarball
 	mkdir -p 8play-${VERSION}/libplayer
-	cp *.1 *.c *.h Makefile README.md 8play-${VERSION}
+	cp *.1 *.c *.h Makefile README.md screenshot.png 8play-${VERSION}
 	cp libplayer/player.c libplayer/player.h libplayer/README.md \
 	    8play-${VERSION}/libplayer
 	tar -cf 8play-${VERSION}.tar 8play-${VERSION}
