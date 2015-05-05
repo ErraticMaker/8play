@@ -259,7 +259,7 @@ printtime(void)
 static void
 resettermios(void)
 {
-	if (termiosflag)
+	if (!termiosflag)
 		return;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios);
 	termiosflag = 0;
