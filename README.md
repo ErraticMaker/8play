@@ -25,3 +25,7 @@ Note: 8play is installed by default into the /usr/local namespace.
 You can change this by specifying `PREFIX`, e.g.  
 `make PREFIX=/usr intall`.
 
+### Arch Linux
+
+[AUR Package](https://aur.archlinux.org/packages/8play)
+
