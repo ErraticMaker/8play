@@ -34,7 +34,6 @@ enum playcmd {
 };
 
 extern char	*__progname;
-static int	termiosflag;
 static struct	termios termios;
 static int	quitflag;
 
@@ -259,10 +258,7 @@ printtime(void)
 static void
 resettermios(void)
 {
-	if (!termiosflag)
-		return;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios);
-	termiosflag = 0;
 }
 
 static void
@@ -300,7 +296,6 @@ settermios(void)
 
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &buf) < 0)
 		goto error;
-	termiosflag = 1;
 	return 0;
 error:
 	return -1;
@@ -334,7 +329,6 @@ main(int argc, char *argv[])
 		QUERY
 	} cmd = PLAY;
 
-	termiosflag = 0;
 	quitflag = 0;
 	setlocale(LC_ALL, "");
 	signal(SIGINT, signalhandler);
