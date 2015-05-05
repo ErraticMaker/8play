@@ -3,10 +3,19 @@
 8play is an unofficial command-line player for [8tracks.com](https://www.8tracks.com).
 See `man 8play` for more information.
 
+8play differs quite a bit from 8p.  I dropped the dependencies for VLC and
+ncurses.  I wrote my own player library based on FFmpeg and SDL
+([libplayer](https://github.com/jgmp/libplayer)), making 8play more
+lightweight.  See [8play(1)](https://jgmp.github.io/8play.html) for more
+information.
+
 ## Dependencies
 curl, ffmpeg, json-c, sdl
 
 ## Installation
+First clone the repository (including the submodule libplayer).
+`git clone --recursive https://github.com/jgmp/8play.git`
+
 To install run (as root)
 `make clean install`
 
