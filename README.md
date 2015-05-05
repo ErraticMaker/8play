@@ -12,13 +12,13 @@ more lightweight.
 curl, ffmpeg, json-c, sdl
 
 ## Installation
-First clone the repository (including the submodule libplayer).
+First clone the repository (including the submodule libplayer).  
 `git clone --recursive https://github.com/jgmp/8play.git`
 
-To install run (as root)
+To install run (as root)  
 `make clean install`
 
 Note: 8play is installed by default into the /usr/local namespace.
-You can change this by specifying `PREFIX`, e.g.
+You can change this by specifying `PREFIX`, e.g.  
 `make PREFIX=/usr intall`.
 
