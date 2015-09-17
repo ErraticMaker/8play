@@ -47,7 +47,8 @@ void	mix_free(struct mix *mix);
 struct	mix *mix_getbysimilar(int mixid, const char *playtoken);
 struct	mix *mix_getbyurl(const char *url);
 void	mixset_free(struct mix ***mix, size_t size);
-struct	mix **mixset_searchbysmartid(const char *smartid, size_t *size);
+struct	mix **mixset_searchbysmartid(const char *smartid, int p, int pp,
+    size_t *size);
 void	report(int trackid, int mixid, const char *playtoken);
 void	track_free(struct track *track);
 struct	track *track_getfirst(int mixid, const char *playtoken);

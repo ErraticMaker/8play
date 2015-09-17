@@ -264,7 +264,7 @@ mixset_free(struct mix ***mix, size_t size)
 }
 
 struct mix **
-mixset_searchbysmartid(const char *smartid, size_t *size)
+mixset_searchbysmartid(const char *smartid, int p, int pp, size_t *size)
 {
 	struct mix **m;
 	json_object *root = NULL, *mixset, *mixes;
@@ -272,11 +272,18 @@ mixset_searchbysmartid(const char *smartid, size_t *size)
 	size_t len;
 	int i, nr;
 
+	if (p <= 0)
+		p = 1;
+	if (pp <= 0)
+		pp = 12;
+
 	len = strlen(SERVERNAME) + strlen("mix_sets/") + strlen(smartid) +
-	    strlen("?include=mixes[user]") + 1;
+	    strlen("?include=mixes[user]+pagination&page=") + intlen(p) +
+	    strlen("&per_page=") + intlen(pp) + 1;
 	url = xmalloc(len);
-	nr = snprintf(url, len, "%smix_sets/%s?include=mixes[user]", SERVERNAME,
-	    smartid);
+	nr = snprintf(url, len,
+	    "%smix_sets/%s?include=mixes[user]+pagination&page=%d&per_page=%d",
+	    SERVERNAME, smartid, p, pp);
 	if (nr == -1 || (size_t)nr >= len)
 		errx(1, "search by smartid url too long");
 

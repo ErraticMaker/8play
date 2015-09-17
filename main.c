@@ -44,7 +44,7 @@ static int	playtrack(int, struct track *, const char *);
 static void	printshortmix(struct mix *);
 static void	printtime(void);
 static void	resettermios(void);
-static void	search(const char *);
+static void	search(const char *, int, int);
 static int	settermios(void);
 static void	signalhandler(int);
 static void	usage(void);
@@ -262,13 +262,13 @@ resettermios(void)
 }
 
 static void
-search(const char *smartid)
+search(const char *smartid, int p, int pp)
 {
 	struct mix **mix;
 	size_t len;
 	int i;
 
-	mix = mixset_searchbysmartid(smartid, &len);
+	mix = mixset_searchbysmartid(smartid, p, pp, &len);
 	if (mix == NULL) {
 		printf("Search returned no results.\n");
 		return;
@@ -313,7 +313,7 @@ usage(void)
 {
 	fprintf(stderr, "usage %s:\n"
 	    "\t%s [-P [-c]] URL\t\tPlay\n"
-	    "\t%s -S SmartID\t\tSearch\n"
+	    "\t%s -S [-p page_number] [-i items_per_page] SmartID\t\tSearch\n"
 	    "\t%s -Q URL\t\t\tDisplay mix info\n",
 	    __progname, __progname, __progname, __progname);
 	exit(1);
@@ -323,6 +323,8 @@ int
 main(int argc, char *argv[])
 {
 	int cflag = 0, ch;
+	int pp = 0;	/* items per page */
+	int p = 0;	/* page number */
 	enum {
 		PLAY,
 		SEARCH,
@@ -333,7 +335,7 @@ main(int argc, char *argv[])
 	setlocale(LC_ALL, "");
 	signal(SIGINT, signalhandler);
 
-	while ((ch = getopt(argc, argv, "PcSQ")) != -1) {
+	while ((ch = getopt(argc, argv, "PcSp:i:Q")) != -1) {
 		switch (ch) {
 		default:
 		case 'P':
@@ -346,6 +348,12 @@ main(int argc, char *argv[])
 			break;
 		case 'S':
 			cmd = SEARCH;
+			break;
+		case 'i':
+			pp = atoi(optarg);
+			break;
+		case 'p':
+			p = atoi(optarg);
 			break;
 		case 'Q':
 			cmd = QUERY;
@@ -365,7 +373,7 @@ main(int argc, char *argv[])
 	case SEARCH:
 		if (argc < 1)
 			usage();
-		search(argv[0]);
+		search(argv[0], p, pp);
 		break;
 	case QUERY:
 		if (argc < 1)
