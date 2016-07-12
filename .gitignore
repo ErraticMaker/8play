@@ -1,0 +1,4 @@
+8play
+8play.1.gz
+*.o
+libplayer/*.o
